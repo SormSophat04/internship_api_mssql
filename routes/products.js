@@ -34,13 +34,13 @@ router.get("/", async (req, res) => {
 });
 
 // READ single product
-router.get("/:id", async (req, res) => {
+router.get("/:Id", async (req, res) => {
   try {
     const pool = await poolPromise;
     const result = await pool
       .request()
-      .input("id", req.params.id)
-      .query("SELECT * FROM Products WHERE id = @id");
+      .input("Id", req.params.Id)
+      .query("SELECT * FROM Products WHERE Id = @Id");
     res.json(result.recordset[0]);
   } catch (err) {
     res.status(500).send(err.message);
@@ -48,18 +48,18 @@ router.get("/:id", async (req, res) => {
 });
 
 // UPDATE product
-router.put("/:id", async (req, res) => {
+router.put("/:Id", async (req, res) => {
   const { ProductName, Price, Stock } = req.body;
   try {
     const pool = await poolPromise;
     await pool
       .request()
-      .input("id", req.params.id)
+      .input("Id", req.params.Id)
       .input("ProductName", ProductName)
       .input("Price", Price)
       .input("Stock", Stock)
       .query(
-        "UPDATE Products SET ProductName = @ProductName, Price = @Price, Stock = @Stock WHERE id = @id"
+        "UPDATE Products SET ProductName = @ProductName, Price = @Price, Stock = @Stock WHERE Id = @Id"
       );
     res.send("Product updated");
   } catch (err) {
@@ -68,13 +68,13 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE product
-router.delete("/:id", async (req, res) => {
+router.delete("/:Id", async (req, res) => {
   try {
     const pool = await poolPromise;
     await pool
       .request()
-      .input("id", req.params.id)
-      .query("DELETE FROM Products WHERE id = @id");
+      .input("Id", req.params.Id)
+      .query("DELETE FROM Products WHERE Id = @Id");
     res.send("Product deleted");
   } catch (err) {
     res.status(500).send(err.message);
