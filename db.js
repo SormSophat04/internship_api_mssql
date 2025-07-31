@@ -19,9 +19,9 @@ const config = {
 const poolPromise = new sql.ConnectionPool(config)
   .connect()
   .then((pool) => {
-    console.log("✅ Connected to SQL Server Cloud!");
+    console.log("Connected to SQL Server Cloud!");
     return pool;
   })
-  .catch((err) => console.error("❌ Cloud DB Connection Failed:", err));
+  .catch((err) => console.error("Cloud DB Connection Failed:", err));
 
 module.exports = { sql, poolPromise };
